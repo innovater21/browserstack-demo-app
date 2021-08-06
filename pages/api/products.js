@@ -1,6 +1,8 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from '@sentry/nextjs';
 import productsData from '../../src/constants/products.json';
 
-export default (req, res) => {
+const handler = async (req, res)  => {
   const userName = req.query['userName'];
 
   // Set 5 product as fav
@@ -19,3 +21,5 @@ export default (req, res) => {
     res.json(productsData);
   }
 };
+
+export default withSentry(handler);

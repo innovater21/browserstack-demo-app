@@ -1,6 +1,9 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from '@sentry/nextjs';
+
 import { isValidUser, isValidPassword, isLockedUser } from '../../src/constants/users';
 
-export default (req, res) => {
+const handler = async (req, res)  => {
   const userName = req.body['userName'];
   const password = req.body['password'];
   if (isValidUser(userName) && isValidPassword(password)) {
@@ -24,3 +27,5 @@ export default (req, res) => {
     res.json({ errorMessage });
   }
 };
+
+export default withSentry(handler);
