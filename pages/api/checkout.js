@@ -1,6 +1,8 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from '@sentry/nextjs';
 import { isValidUser } from '../../src/constants/users';
 
-export default (req, res) => {
+const handler = async (req, res)  => {
   const userName = req.body['userName'];
   if (isValidUser(userName)) {
     res.statusCode = 200;
@@ -10,3 +12,6 @@ export default (req, res) => {
     res.json({ });
   }
 };
+
+export default withSentry(handler);
+

@@ -1,6 +1,8 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from '@sentry/nextjs';
 import offersData from '../../src/constants/offers.json';
 
-export default (req, res) => {
+const handler = async (req, res)  => {
   const userName = req.query['userName'];
   const latitude = parseInt(req.query['latitude'], 10);
   const longitude = parseInt(req.query['longitude'], 10);
@@ -46,3 +48,6 @@ export default (req, res) => {
     res.json({ cityName: city });
   }
 };
+
+export default withSentry(handler);
+

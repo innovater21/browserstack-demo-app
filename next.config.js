@@ -3,6 +3,8 @@ const withStyles = require('@webdeb/next-styles')
 const withPlugins = require('next-compose-plugins');
 const webpack = require('webpack');
 
+const { withSentryConfig } = require('@sentry/nextjs');
+
 const sassConfig = {
   sass: true, // use .scss files
   modules: true // style.(m|module).css & style.(m|module).scss for module files
@@ -44,7 +46,21 @@ const nextConfiguration = {
   },
 };
 
+const SentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true, // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+
 module.exports = withPlugins([
   [withStyles, sassConfig],
   [optimizedImages, optimizedImagesConfig],
+  [withSentryConfig, SentryWebpackPluginOptions]
 ], nextConfiguration);
